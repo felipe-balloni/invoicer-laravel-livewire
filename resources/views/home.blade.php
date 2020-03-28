@@ -15,6 +15,11 @@
                     @endif
 
                     You are logged in!
+
+                    <div class="row mx-auto rounded-lg mt-2">
+                        <a href="{{ route('invoices.create') }}" class="btn btn-primary">Add Invoice</a>
+                    </div>
+
                 </div>
             </div>
         </div>
