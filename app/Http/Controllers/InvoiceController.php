@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\invoice;
+use App\Invoice;
+use App\Product;
+use App\Customer;
+use App\InvoiceItem;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -22,9 +25,12 @@ class InvoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.invoice.create');
+        $customer = Customer::find($request->customer_id);
+        $tax = 20;
+        $products = Product::all();
+        return view('admin.invoices.create', compact('tax', 'products', 'customer'));
     }
 
     /**
@@ -35,27 +41,40 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Invoice = Invoice::create($request->Invoice);
+        for ($i = 0; $i < count($request->product); $i++) {
+            if (isset($request->qty[$i]) && isset($request->price[$i])) {
+                InvoiceItem::create([
+                    'Invoice_id' => $Invoice->id,
+                    'name' => $request->product[$i],
+                    'quantity' => $request->qty[$i],
+                    'price' => $request->price[$i]
+                ]);
+            }
+        }
+
+        return redirect()->route('home');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\invoice  $invoice
+     * @param  \App\Invoice  $Invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(invoice $invoice)
+    public function show(Invoice $Invoice)
     {
-        //
+        $Invoice = Invoice::findOrFail($Invoice);
+        return view('admin.invoices.show', compact('Invoice'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\invoice  $invoice
+     * @param  \App\Invoice  $Invoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(invoice $invoice)
+    public function edit(Invoice $Invoice)
     {
         //
     }
@@ -64,10 +83,10 @@ class InvoiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\invoice  $invoice
+     * @param  \App\Invoice  $Invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, invoice $invoice)
+    public function update(Request $request, Invoice $Invoice)
     {
         //
     }
@@ -75,11 +94,19 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\invoice  $invoice
+     * @param  \App\Invoice  $Invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(invoice $invoice)
+    public function destroy(Invoice $Invoice)
     {
         //
+    }
+
+    public function download(Invoice $Invoice)
+    {
+        $Invoice = Invoice::findOrFail($Invoice);
+        $pdf     = \PDF::loadView('admin.invoices.pdf', compact('Invoice'));
+
+        return $pdf->stream('Invoice.pdf');
     }
 }
