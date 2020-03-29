@@ -12,7 +12,7 @@
                 <div class="card">
                     <div class="card-header">{{ __('Products') }}</div>
                     <div class="card-body">
-                        <a class="btn btn-primary float-right mb-3" href="{{ route('products.create') }}">{{ __('Add new product') }}</a>
+                        <a class="btn btn-primary float-right mb-3" href="{{ route('products.form', null) }}">{{ __('Add new product') }}</a>
                         <table class="table table-hover">
                             <thead class="text-center">
                                 <tr class="row">
@@ -29,7 +29,7 @@
                                 <td class="col-sm-3 text-right"><span class="text-left"> R$</span> {{ $product->price }}
                                 </td>
                                 <td class="col-sm-2 text-center">
-                                    <a class="btn btn-warning btn-sm" href="#" wire:click="edit({{ $product->id }})"><i class="far fa-edit"></i></i></a>
+                                    <a class="btn btn-warning btn-sm" href="{{ route('products.form', $product) }}"><i class="far fa-edit"></i></i></a>
                                     <a class="btn btn-danger btn-sm" href="#" wire:click="delete({{ $product->id }})"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>

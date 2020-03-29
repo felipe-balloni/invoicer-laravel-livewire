@@ -15,7 +15,7 @@ class Index extends Component
 
     public function edit($id)
     {
-
+        //temp
     }
 
     public function delete($id)

@@ -7,8 +7,7 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    public $name = '';
-    public $price = '';
+    public $name, $price;
 
     public function render()
     {

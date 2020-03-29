@@ -29,4 +29,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::livewire('products', 'admin.products.index')->name('products');
     Route::livewire('products/create', 'admin.products.create')->name('products.create');
+    Route::livewire('products/{product?}/edit', 'admin.products.edit')->name('products.edit');
+    Route::livewire('products/form/{product?}', 'admin.products.form')->name('products.form');
 });
