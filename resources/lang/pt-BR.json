@@ -37,5 +37,10 @@
     "No products found.": "Nenhum produto encontrado.",
     "Products": "Produtos",
     "Invoices": "Faturas",
-    "Customers": "Clientes"
+    "Customers": "Clientes",
+    "Edit product": "Editar produto",
+    "Create product": "Criar produto",
+    "Product successfully edited.": "Produto editado com sucesso.",
+    "Product successfully created.": "Produto criado com sucesso.",
+    "Product successfully deleted.": "Produto excluído com sucesso."
 }

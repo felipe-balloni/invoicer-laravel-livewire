@@ -1,18 +1,14 @@
 <div>
-    <div>
-        @if (session()->has('message'))
-        <div class="alert alert-success">
-            {{ session('message') }}
-        </div>
-        @endif
-    </div>
+
+   @include('partials.sessionAlerts')
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Products') }}</div>
                     <div class="card-body">
-                        <a class="btn btn-primary float-right mb-3" href="{{ route('products.form', null) }}">{{ __('Add new product') }}</a>
+                        <a class="btn btn-primary float-right mb-3" href="{{ route('products.form', [null, 'action' => 'create']) }}">{{ __('Add new product') }}</a>
                         <table class="table table-hover">
                             <thead class="text-center">
                                 <tr class="row">
@@ -29,7 +25,7 @@
                                 <td class="col-sm-3 text-right"><span class="text-left"> R$</span> {{ $product->price }}
                                 </td>
                                 <td class="col-sm-2 text-center">
-                                    <a class="btn btn-warning btn-sm" href="{{ route('products.form', $product) }}"><i class="far fa-edit"></i></i></a>
+                                    <a class="btn btn-warning btn-sm" href="{{ route('products.form', [$product, 'action' => 'edit']) }}"><i class="far fa-edit"></i></i></a>
                                     <a class="btn btn-danger btn-sm" href="#" wire:click="delete({{ $product->id }})"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
@@ -39,6 +35,11 @@
                             </tr>
                             @endforelse
                         </table>
+                    </div>
+                    <div class="card-footer justify-content-between">
+                       <div class="float-right">
+                           {{ $products->links() }}
+                       </div>
                     </div>
                 </div>
             </div>

@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Admin\Products;
 
 use App\Product;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public function render()
     {
-        $products = Product::all();
+        $products = Product::paginate(10);
         return view('livewire.admin.products.index', compact('products'));
     }
 
@@ -22,6 +25,6 @@ class Index extends Component
     {
         Product::find($id)->delete();
 
-        session()->flash('message', 'Product successfully deleted.');
+        session()->flash('danger', __('Product successfully deleted.'));
     }
 }

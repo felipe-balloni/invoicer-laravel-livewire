@@ -14,10 +14,12 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
-mix.browserSync({
-    proxy: 'invoicer.app'
-});
-
 if (mix.inProduction()) {
     mix.version();
 }
+
+let proxy_url =  process.env.APP_URL;
+
+mix.browserSync({
+    proxy: proxy_url
+});
