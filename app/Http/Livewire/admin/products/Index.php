@@ -24,7 +24,6 @@ class Index extends Component
     public function delete($id)
     {
         Product::find($id)->delete();
-
         session()->flash('danger', __('Product successfully deleted.'));
     }
 }

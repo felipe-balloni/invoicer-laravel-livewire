@@ -4,10 +4,16 @@ namespace App\Http\Livewire\Admin\Products;
 
 use App\Product;
 use Livewire\Component;
+use SebastianBergmann\Environment\Console;
 
 class Form extends Component
 {
     public $fields, $field_id = null, $action;
+
+    private $validations = [
+        'fields.name'  => 'required|min:3',
+        'fields.price' => 'required|numeric|max:999999.99',
+    ];
 
     public function mount($product = null, $action = null)
     {
@@ -20,19 +26,13 @@ class Form extends Component
 
     public function updated($field)
     {
-        $this->validateOnly($field, [
-            'fields.name'  => 'required|min:3',
-            'fields.price' => 'required|numeric|max:999999.99',
-        ]);
+        $this->validateOnly($field, $this->validations);
     }
 
     public function updateOrCreate()
     {
         // Triggered on wire:click
-        $this->validate([
-            'fields.name'  => 'required|min:3',
-            'fields.price' => 'required|numeric|max:999999.99',
-        ]);
+        $this->validate($this->validations);
 
         // dd($this->fields, $this->field_id);
 
@@ -44,7 +44,7 @@ class Form extends Component
             session()->flash('success', __('Product successfully edited.'));
         }
 
-        return $this->redirectRoute('products');
+        return $this->redirectRoute('products', true);
     }
 
     public function render()

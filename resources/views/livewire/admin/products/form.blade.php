@@ -19,7 +19,7 @@
                                 *</label>
                             <div class="col-md-10">
                                 <input class="form-control @error('fields.name') is-invalid @enderror"
-                                       wire:model.lazy="fields.name" autofocus
+                                       wire:model="fields.name" autofocus
                                        placeholder="{{ __('Product description') }}" name="fields.name" type="text"
                                        value="{{ old('fields.name') }}">
                                 @error('fields.name')
@@ -35,7 +35,7 @@
                             *</label>
                         <div class="col-md-10">
                             <input class="form-control @error('fields.price') is-invalid @enderror"
-                                   wire:model.lazy="fields.price" step="0,01" placeholder="0,00" name="fields.price"
+                                   wire:model="fields.price" step="0,01" placeholder="0,00" name="fields.price"
                                    type="number" value="{{ old('fields.price') }}">
                             @error('fields.price')
                             <span class="invalid-feedback" role="alert">
